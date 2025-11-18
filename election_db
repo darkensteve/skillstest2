@@ -1,0 +1,44 @@
+CREATE DATABASE IF NOT EXISTS election_db;
+USE election_db;
+
+-- Positions Table
+CREATE TABLE IF NOT EXISTS positions (
+    posID INT AUTO_INCREMENT PRIMARY KEY,
+    posName VARCHAR(100) NOT NULL,
+    posNumPositions INT NOT NULL DEFAULT 1,
+    posStat VARCHAR(20) NOT NULL DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Voters Table
+CREATE TABLE IF NOT EXISTS voters (
+    voterID INT AUTO_INCREMENT PRIMARY KEY,
+    voterPass VARCHAR(255) NOT NULL,
+    voterFName VARCHAR(50) NOT NULL,
+    voterMName VARCHAR(50),
+    voterLName VARCHAR(50) NOT NULL,
+    voterStat VARCHAR(20) NOT NULL DEFAULT 'active',
+    voted VARCHAR(3) NOT NULL DEFAULT 'n'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Candidates Table
+CREATE TABLE IF NOT EXISTS candidates (
+    candID INT AUTO_INCREMENT PRIMARY KEY,
+    candFName VARCHAR(50) NOT NULL,
+    candMName VARCHAR(50),
+    candLName VARCHAR(50) NOT NULL,
+    posID INT NOT NULL,
+    candStat VARCHAR(20) NOT NULL DEFAULT 'active',
+    FOREIGN KEY (posID) REFERENCES positions(posID) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Votes Table (to track who voted for whom)
+CREATE TABLE IF NOT EXISTS votes (
+    voteID INT AUTO_INCREMENT PRIMARY KEY,
+    voterID INT NOT NULL,
+    candID INT NOT NULL,
+    posID INT NOT NULL,
+    voteDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (voterID) REFERENCES voters(voterID) ON DELETE CASCADE,
+    FOREIGN KEY (candID) REFERENCES candidates(candID) ON DELETE CASCADE,
+    FOREIGN KEY (posID) REFERENCES positions(posID) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
