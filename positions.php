@@ -97,13 +97,13 @@ $result = $conn->query("SELECT * FROM positions");
     </form>
 
     <!-- Positions List -->
-    <div class="w3-container w3-margin-top">
+    <div class="w3 container w3-margin-top">
         <table class="w3-table w3-striped w3-bordered w3-hoverable">
             <tr class="w3-green">
                 <th>Position Name</th>
                 <th>Number of Positions</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Action</th>
             </tr>
             <?php while($row = $result->fetch_assoc()): ?>
                 <tr>
@@ -113,13 +113,13 @@ $result = $conn->query("SELECT * FROM positions");
                     <td>
                         <a href="?edit=<?php echo $row['posID']; ?>" class="w3-button w3-orange">Edit</a>
                         <?php if ($row['posStat'] == 'active'): ?>
-                            <a href="?deactivate=<?php echo $row['posID']; ?>" class="w3-button w3-red" onclick="return confirm('Are you sure?')">Deactivate</a>
+                            <a href="?deactivate=<?echo $row['posID']; ?>" class="w3-button w3-red" onclick="return confirm('Are you sure?')">Deactivate</a>
                         <?php else: ?>
-                            <a href="?activate=<?php echo $row['posID']; ?>" class="w3-button w3-green">Activate</a>
+                            <a href="?activate=<?echo $row['posID']; ?>" class="w3-button w3-green">Activate</a>
                         <?php endif; ?>
                     </td>
                 </tr>
-            <?php endwhile; ?>
+            <?php endwhile ?>
         </table>
     </div>
 </body>
